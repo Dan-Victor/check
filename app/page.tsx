@@ -1,65 +1,92 @@
-import Image from "next/image";
+import { getProducts } from "../lib/api";
+import ItemCard from "./components/ItemCard";
+import SearchBar from "./components/SearchBar";
+import CategoryFilter from "./components/CategoryFilter";
+import Link from "next/link";
 
-export default function Home() {
+
+//typescript types for the product data
+interface ItemCardProps {
+  id: number;
+  title: string;
+  price: number;
+  rating: number;
+  thumbnail: string;
+}
+
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{
+     page?: string
+     search?: string;
+     category?: string; }>;
+})
+ {
+  const params = await searchParams;
+  const page = Number(params.page) || 1;
+
+// Extract search and category from params, providing default empty strings if they are not present
+   const search = params.search || "";
+  const category = params.category || "";
+
+  const data = await getProducts(page, 20, search, category);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="p-6 text-black bg-black mx-auto">
+      <h1 className="text-2xl text-white font-bold mb-6">Products</h1>
+     
+        <SearchBar />
+  <CategoryFilter />
+
+      <div className="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-screen items-stretch">
+        
+        {/* Check if there are no products and display a message, otherwise map through the products and display them using the ItemCard component */}
+        {data?.products?.length === 0 ? (
+          <p className="text-center col-span-full md:text-3xl text-2xl text-red-300">
+            No products found
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+        ) : (
+          data.products.map((product: ItemCardProps) => (
+            <ItemCard key={product.id} product={product} />
+          ))
+        )}
+
+      </div>
+     
+{/* Pagination Controls */}
+<div className="flex justify-center items-center gap-4 mt-8 w-full mx-auto ">
+  
+  {/* Previous Button */}
+  <Link
+    href={`/?page=${page - 1}`}
+    className={`px-4 py-2 rounded ${
+      page === 1
+        ? "bg-gray-300 cursor-not-allowed pointer-events-none"
+        : "bg-white hover:bg-gray-200"
+    }`}
+  >
+    Previous
+  </Link>
+
+  {/* Page Indicator */}
+  <span className="text-white font-semibold">
+    Page {page} of {Math.ceil(data.total / data.limit)}
+  </span>
+
+  {/* Next Button */}
+  <Link
+    href={`/?page=${page + 1}`}
+    className={`px-4 py-2 rounded ${
+      page >= Math.ceil(data.total / data.limit)
+        ? "bg-gray-300 cursor-not-allowed pointer-events-none"
+        : "bg-white hover:bg-gray-200"
+    }`}
+  >
+    Next
+  </Link>
+
+</div>
+    </main>
   );
 }
