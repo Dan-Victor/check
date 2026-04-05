@@ -9,7 +9,7 @@ A modern Next.js application showcasing a products listing page with pagination,
 - **Search & Filtering**: URL-driven search and category filters with bookmarkable/shareable results
 - **API Integration**: Uses [DummyJSON](https://dummyjson.com) for products, posts, and users (no API key required)
 - **Next.js Optimization**: Automatic font optimization with `next/font` using the Geist font family
-- **Deployment**: Deployed on [Vercel](https://vercel.com) for fast and simple hosting
+- **Deployment**: Deployed on [Vercel](https://https://check-tau-eight.vercel.app/) for fast and simple hosting
 
 ## Getting Started
 
