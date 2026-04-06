@@ -33,7 +33,7 @@ export default async function ProductPage({
         loading="lazy"
       />
 
-      <p className="mb-2 w-[50%] text-center">{product.description}</p>
+      <p className="mb-2 md:w-[50%] text-center">{product.description}</p>
       <p className="mb-2 font-semibold text-lg">${product.price}</p>
       <p className="mb-2"> Rating: {product.rating}</p>
       <p className="text-gray-500">{product.category}</p>

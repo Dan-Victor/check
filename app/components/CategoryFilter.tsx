@@ -24,12 +24,12 @@ export default function CategoryFilter() {
 
   return (
     <>
-    <label htmlFor="category" className="block mb-2 text-sm font-medium  w-2xl text-white">
+    <label htmlFor="category" className="block mb-2 text-sm font-medium mt-2  w-2xl text-white">
       Filter by Category:
     </label>
     <select
       onChange={(e) => handleChange(e.target.value)}
-      className="p-3 border bg-white text-black rounded-xl "
+      className="p-2 border bg-white text-black rounded-xl "
     >
       <option value="">All Categories</option>
       {categories.map((cat) => (
