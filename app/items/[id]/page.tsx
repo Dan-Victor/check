@@ -21,7 +21,7 @@ export default async function ProductPage({
 
   return (
     <main className="p-6 w-full mx-auto bg-black text-black  ">
-        <div className='text-black bg-white mx-auto flex justify-center p-6 items-center flex-col h-auto rounded-xl w-[80%]'>
+        <div className='text-black bg-white mx-auto flex justify-center p-6 items-center flex-col h-auto rounded-xl w-[95%] md:w-[80%]'>
       <h1 className="text-3xl font-bold mb-4">{product.title}</h1>
 
       <Image
