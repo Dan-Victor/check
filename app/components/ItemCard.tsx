@@ -24,7 +24,7 @@ const ItemCard = ({product}: {product: ItemCardProps}) => {
               className="h-55 w-full object-contain"
               width={300}
               height={300}
-              loading="lazy"
+             priority
               onError={() => setImgSrc("https://via.placeholder.com/300x300?text=No+Image")} // fallback image on error
             />
              <div className="p-4">

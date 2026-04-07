@@ -30,7 +30,7 @@ export default async function ProductPage({
         width={400}
         height={400}
         className="rounded mb-4 object-contain"
-        loading="lazy"
+        priority
       />
 
       <p className="mb-2 md:w-[50%] text-center">{product.description}</p>
