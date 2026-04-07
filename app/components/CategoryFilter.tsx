@@ -24,7 +24,7 @@ export default function CategoryFilter() {
 
   return (
     <>
-    <label htmlFor="category" className="block mb-2 text-sm font-medium mt-2  w-2xl text-white">
+    <label htmlFor="category" className="block mb-2 text-sm font-medium mt-2  w-auto text-white">
       Filter by Category:
     </label>
     <select

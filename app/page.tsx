@@ -55,7 +55,7 @@ export default async function Home({
       </div>
      
 {/* Pagination Controls */}
-<div className="flex justify-center items-center gap-4 mt-8 w-full mx-auto ">
+<div className="flex justify-center items-center  gap-4 mt-8 w-full mx-auto ">
   
   {/* Previous Button */}
   <Link
